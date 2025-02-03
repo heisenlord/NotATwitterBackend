@@ -1,6 +1,5 @@
 const express = require("express");
 const { generateContent } = require("./gemini"); // Assuming this is your function to generate content
-const { v4: uuidv4 } = require("uuid");
 const Database = require("./models/mongo"); // Import the Database model
 
 const router = express.Router();
@@ -17,6 +16,8 @@ router.post("/", async (req, res) => {
     If the tweet is related to **real-life celebrities/influencers**, ensure:
     - The replies reflect the celebrity's personality, industry, and typical humor or sarcasm style.
     - Make sure tweet more sarcastic and funny.
+   - If the user reply or the original post is in a specific language, respond in that language
+
     - sort the replies which are more relevant to less relevant.
     - Incorporate relevant topics like rivalries, trends, or their signature quirks.
     - Use usernames resembling their public persona (e.g., @QueenBey, @KingJames).
@@ -51,7 +52,7 @@ router.post("/", async (req, res) => {
     Tweet =
   `; 
 
-  const { prompt, pid } = req.body;
+  const { prompt, pid,name ,profilePic} = req.body;
 
   if (!prompt) {
     console.error("Prompt is missing in the request body");
@@ -69,9 +70,9 @@ router.post("/", async (req, res) => {
     // Create a new post to save in the database
     const newPost = new Database({
       id: pid,
-      profilePic: "tt1.jpg",
-      name: "some_user_name", // Replace with actual user ID if available
-      handle: "some_user_id", // Generate a unique ID for the post
+      profilePic:profilePic,
+      name:name, // Replace with actual user ID if available
+      handle: name, // Generate a unique ID for the post
       tweet: prompt, // Optional, replace with actual image URL if available
       replies: content, // This will be the sarcastic replies generated
     });

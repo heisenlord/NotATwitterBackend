@@ -1,17 +1,24 @@
-require("dotenv").config(); // Load environment variables from .env
+require("dotenv").config(); // Load environment variables from .env file
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const generateRouter = require("./generate"); // For the /generate route
-const getPostRouter = require("./getPost"); // For the /post/:id route
-const testGemini = require("./testGemini"); // For the /testgemini route
-const imageRouter = require("./Image");
+
+// Import route handlers
+const generateRouter = require("./generate"); // /generate route
+const getPostRouter = require("./getPost"); // /post/:id route
+const testGemini = require("./testGemini"); // /testgemini route
+const imageRouter = require("./Image"); // /image route
+const checkUsernameRouter = require("./checkusername"); // /checkusername route
+const getPostsByName=require("./getPostsByName")
+const getReply=require("./generateReply");
+
+// Initialize Express app
 const app = express();
 
-// Use CORS middleware
+// Use CORS middleware to allow cross-origin requests
 app.use(cors());
 
-// Middleware to parse JSON requests
+// Middleware to parse JSON bodies
 app.use(express.json());
 
 // MongoDB connection setup
@@ -23,14 +30,15 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     console.error("Error connecting to MongoDB:", error.message);
   });
 
-// Use the route files
-app.use("/generate", generateRouter); // Mount /generate routes
-app.use("/post", getPostRouter); // Mount /post/:id routes
-app.use("/testgemini", testGemini); // Mount /testgemini routes
- // Import the image route
-app.use("/image", imageRouter); // Mount the /image routes
-
-// Global error handling middleware
+// Use route handlers
+app.use("/generate", generateRouter);  // Mount the /generate route
+app.use("/post", getPostRouter);  // Mount the /post/:id route
+app.use("/testgemini", testGemini);  // Mount the /testgemini route
+app.use("/image", imageRouter);  // Mount the /image route
+app.use("/check", checkUsernameRouter);  // Mount the /checkusername route
+app.use("/posts/",getPostsByName)
+app.use("/generatereply",getReply)
+// Global error handler (catch all errors)
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ success: false, message: "Something went wrong!" });
