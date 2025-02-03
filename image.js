@@ -4,7 +4,7 @@ const router = express.Router();
 // Define the mapping of user IDs to Google Image URLs
 const GoogleImageUrls = {
   "@mkbhd": "https://yt3.googleusercontent.com/lkH37D712tiyphnu0Id0D5MwwQ7IRuwgQLVD05iMXlDWO-kDHut3uI4MgIEAQ9StK0qOST7fiA=s900-c-k-c0x00ffffff-no-rj",
-  "@MrWhoseTheBoss": "https://www.google.com/search?q=MrWhoseTheBoss&tbm=isch",
+  "@MrWhoseTheBoss": "",
   "@Casey": "https://www.google.com/search?q=Casey&tbm=isch",
   "@pewdiepie": "https://www.google.com/search?q=pewdiepie&tbm=isch",
   "@unboxtherapy": "https://www.google.com/search?q=unboxtherapy&tbm=isch",
