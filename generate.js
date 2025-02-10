@@ -6,51 +6,51 @@ const router = express.Router();
 
 // POST route to generate content
 router.post("/", async (req, res) => {
-    const SystemPrompt = `
-    Generate an array of 10 sarcastic replies to the given tweet. Return the result in a JSON array format, where each element is an object containing:
-    {
-      reply: 'Your sarcastic comment here (14-18 words), written in the celebrity's or fictional character's tone and style.',
-      username: 'Appropriate username reflecting either the celebrity or fictional character',
-      userID: 'uniqueID987'
+  const SystemPrompt = `
+  Generate an array of 10 sarcastic replies to the given tweet. If the input tweet is a question, the first reply must be a direct, crisp answer of maximum 40 words, while maintaining the sarcastic tone.
+  
+  Return the result in a JSON array format, where each element is an object containing:
+  {
+    reply: 'Your sarcastic comment here (14-18 words), written in the celebrity's or fictional character's tone and style.',
+    username: 'Appropriate username reflecting either the celebrity or fictional character',
+    userID: 'uniqueID987'
+  }
+  
+  For real-life celebrities/influencers replies:
+  - Reflect the celebrity's personality, industry, and typical humor style
+  - Emphasize sarcasm and humor
+  - Match the language of the original tweet/reply
+  - Sort by relevance
+  - Include references to rivalries, trends, or signature quirks
+  - Use authentic-style usernames (e.g., @QueenBey, @KingJames)
+  
+  For fictional character replies:
+  - Write in the character's tone, personality, and quirks
+  - Include universe-specific references and plot points
+  - Use character-appropriate usernames (e.g., @WizardingWhiz, @GothamKnight)
+  
+  Reply Distribution:
+  - 50% directly related to topic
+  - 30% creative but relevant
+  - 20% purely comedic
+  
+  Critical Requirements:
+  - All replies (except first reply to questions) must be 14-18 words
+  - First reply to questions must be under 40 words
+  - Each user can only reply once
+  - Output must be valid JSON.parse() compatible
+  - No text before or after the JSON array
+  
+  Example Output:
+  [
+    {outlo
+      "reply": "Oh, hello *mfs* indeed. Did you forget your monocle, darling?",
+      "username": "@MrDarcy_Pride",
+      "userID": "uniqueID9871"
     }
-    If the tweet is related to **real-life celebrities/influencers**, ensure:
-    - The replies reflect the celebrity's personality, industry, and typical humor or sarcasm style.
-    - Make sure tweet more sarcastic and funny.
-   - If the user reply or the original post is in a specific language, respond in that language
-
-    - sort the replies which are more relevant to less relevant.
-    - Incorporate relevant topics like rivalries, trends, or their signature quirks.
-    - Use usernames resembling their public persona (e.g., @QueenBey, @KingJames).
-    If the tweet is related to **fictional characters**, ensure:
-    - Replies are written in the tone, personality, and quirks of the character.
-    - Include references to their universe, rivalries, or significant plot points.
-    - Use usernames reflective of the character (e.g., @WizardingWhiz for Harry Potter, @GothamKnight for Batman).
-    Make sure the replies are heavily sarcastic, 14-18 words long, and match the tweet's context.
-    Additional Constraints:
-    - 50% of replies should directly relate to the topic.
-    - 30% should be out-of-the-box replies that sync with the topic.
-    - 20% should be comedic replies designed to make people laugh.
-    - Ensure user IDs appear authentic and mimic real social media accounts.
-    - CRITICAL NEW RULE: Return the entire output as a valid JSON array that can be directly parsed by JSON.parse()
-    --Output should exactly look like example below don't add anything before and after--
-    --IMPORTANT--Make sure same user shouldn't reply more than once.
-    Output Format Example:
-    '[
-      {
-        reply: "Oh, hello *mfs* indeed. Did you forget your monocle, darling?",
-        username: "@MrDarcy_Pride",
-        userID: "uniqueID9871"
-      },
-      {
-        reply: "Greetings, mortals. Is the apocalypse upon us, or just another Tuesday?",
-        username: "@DrStrange_616",
-        userID: "uniqueID9872"
-      }
-      // ... remaining replies
-    ]'
-    
-    Tweet =
-  `; 
+  ]
+  
+  Tweet = `;
 
   const { prompt, pid,name ,profilePic} = req.body;
 

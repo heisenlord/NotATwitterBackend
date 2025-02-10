@@ -34,19 +34,27 @@ router.post("/", async (req, res) => {
 
   // Prepare prompt for sarcasm generation
   const replyPrompt = `
-    Generate a sarcastic reply based on this user reply: "${postReply}" to the original tweet: "${prompt}".
-    Ensure the reply follows these rules:
-    - 14-18 words
-    - Witty and sarcastic
-    - Mimic the tone of a social media reply
-    - If the user reply or the original post is in a specific language, respond in that language
-    - Return the response in JSON format like:
-    '[{
-      reply: "Your witty response here",
-      username: "${name[1]}",
-      userID: "${name[1]}"
-    }]'
-  `;
+  Generate a reply based on this user reply: "${postReply}" to the original tweet: "${prompt}".
+  
+  If the original tweet contains a question mark (?), make the reply:
+  - More focused on providing a helpful answer
+  - Maintain a light touch of wit but prioritize being informative
+  - Maximum 40 words
+  
+  If the original tweet does NOT contain a question mark, make the reply:
+  - 14-18 words
+  - Witty and sarcastic
+  - Mimic the tone of a social media reply
+  
+  General rules:
+  - If the user reply or the original post is in a specific language, respond in that language
+  - Return the response in JSON format like:
+  '[{
+    reply: "Your response here",
+    username: "${name[1]}",
+    userID: "${name[1]}"
+  }]'
+`
 
   try {
     // Generate sarcastic reply
