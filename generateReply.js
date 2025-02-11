@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
   }
 
   // Prepare prompt for sarcasm generation
-  const replyPrompt = `
+ const replyPrompt = `
   Generate a reply based on this user reply: "${postReply}" to the original tweet: "${prompt}".
   
   If the original tweet contains a question mark (?), make the reply:
